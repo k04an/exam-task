@@ -25,6 +25,12 @@ async function getDataFromTable(tableName, id) {
     })
 }
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+    next()
+})
+
 // Конечная точка - Клиенты
 app.route(config.API_PREFIX + 'client')
     .get((req, res) => {
@@ -371,7 +377,7 @@ app.route(config.API_PREFIX + 'request')
     .put(express.urlencoded({extended: true}), (req, res) => {
         if (req.body.scheme && req.body.client && req.body.execution_date && req.body.execution_time && req.body.description) {
             let connection = createConnection()
-            connection.execute(`UPDATE requests SET scheme=${req.body.scheme}, client=${req.body.client}, execution_date="${req.body.execution_date}", execution_time="${req.body.execution_time}" WHERE id=${req.body.id}`, (err) => {
+            connection.execute(`UPDATE requests SET scheme=${req.body.scheme}, client=${req.body.client}, execution_date="${req.body.execution_date}", execution_time="${req.body.execution_time}", description="${req.body.description}" WHERE id=${req.body.id}`, (err) => {
                 if (err) throw new Error(err.message)
             })
             connection.end()

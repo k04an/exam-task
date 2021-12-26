@@ -4,5 +4,5 @@ module.exports = {
     DATABASE_USER: 'root',
     DATABASE_PASSWORD: '',
     API_PREFIX: '/api/',
-    PORT: 8080
+    PORT: process.env.PORT
 }
